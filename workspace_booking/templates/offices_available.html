@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if offices %}
+<h2>List of offices available: </h2>
+{% for office in offices %}
+<a href="{% url 'room-details' pk=office.id %}"><p>{{office.room_name}}</p></a>
+
+{% endfor %}
+
+{% endif %}
+
+{% endblock content %}

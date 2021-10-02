@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    {% block head %}
+
+    {% endblock head %}
+    <title>{{ title }}</title>
+
+</head>
+<header>
+    <div class="nav-bar">
+        <p class="logo">Work<span class="span-logo1">Spacer</span><span class="span-logo2">-{{ title }}</span></p>
+        <div class="nav-links">
+            <a href="{% url 'add-office' %}">Add office</a>
+
+        </div>
+    </div>
+</header>
+<body>
+{% if messages %}
+<div class="alert alert-success ">
+    {% for message in messages %}
+    <p>{{ message }}</p><br>
+    {% endfor %}
+
+</div>
+{% endif %}
+{% block content %}
+{% endblock content %}
+</body>
+<footer class="page-footer font-small pt-4 fixed-bottom">
+   <div class="p-4 bg-secondary text-white text-center">© <script>
+            document.write(new Date().getFullYear());
+          </script> Copyright: Leszek Grechowicz
+      <a href="https://github.com/leszekgrechowicz"> GitHub</a>
+    </div>
+</footer>
+</html>
