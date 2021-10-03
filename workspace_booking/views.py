@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.views.generic import FormView
-from .models import Office
-from .forms import AddRoomForm
+from .models import Room
+from .forms import AddRoomForm, EditRoomForm, BookRoomForm
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.db import IntegrityError
 
 
 def view_rooms(request):
@@ -11,7 +12,7 @@ def view_rooms(request):
 
     title = "All Rooms"
 
-    rooms = Office.objects.all().order_by('room_capacity')
+    rooms = Room.objects.all().order_by('room_capacity')
     if not rooms:
         messages.info(request, 'All Rooms are vacant !')
 
@@ -19,7 +20,7 @@ def view_rooms(request):
 
 
 class AddRoom(FormView):
-    """Adding an Office to the database"""
+    """Adding an Room to the database"""
 
     title = "Add Room"
 
@@ -33,8 +34,8 @@ class AddRoom(FormView):
             room_name = form.cleaned_data['room_name']
             room_capacity = form.cleaned_data['room_capacity']
             projector_available = form.cleaned_data['projector_available']
-            room = Office.objects.create(room_name=room_name, room_capacity=room_capacity,
-                                         projector_available=projector_available)
+            room = Room.objects.create(room_name=room_name, room_capacity=room_capacity,
+                                       projector_available=projector_available)
             messages.success(request, f'Room "{room.room_name}" has been added to the database.')
 
             return redirect(view_rooms)
@@ -46,27 +47,60 @@ def room_details(request, pk):
     """Displaying room details"""
 
     title = "Room details"
+    room = Room.object.get(id=pk)
 
-    room = Office.object.get(id=pk)
 
-
-# TODO: Implement edit_room
 class EditRoomView(FormView):
+    template_name = 'add_room.html'
+    title = 'Edit Room'
 
     def get(self, request, pk):
-        pass
+
+        room_to_edit = Room.objects.get(id=pk)
+
+        pre_data = {
+            'room_name': room_to_edit.room_name,
+            'room_capacity': room_to_edit.room_capacity,
+
+        }
+        form = EditRoomForm(initial=pre_data)
+
+        return render(request, self.template_name, {'title': self.title, 'form': form})
+
+    def post(self, request, pk):
+        form = EditRoomForm(request.POST or None)
+        if form.is_valid():
+            room_name = form.cleaned_data['room_name']
+            room_capacity = form.cleaned_data['room_capacity']
+            projector_available = form.cleaned_data['projector_available']
+            try:
+                Room.objects.filter(id=pk).update(room_name=room_name, room_capacity=room_capacity,
+                                                  projector_available=projector_available)
+            except IntegrityError:
+                messages.warning(request, f'Room "{room_name}" already exist in the database')
+                return render(request, self.template_name, {'title': self.title, 'form': form})
+
+            messages.success(request, 'Room details updated !')
+            return redirect(view_rooms)
+        else:
+            return render(request, self.template_name, {'title': self.title, 'form': form})
 
 
-# TODO: Implement delete_room
 def delete_room(request, pk):
-    """Delete room by the given id"""
+    """Deletes room by the given id"""
 
-    room_to_delete = Office.objects.get(id=pk)
+    room_to_delete = Room.objects.get(id=pk)
     room_to_delete.delete()
-    messages.success(request, f'Room name "{room_to_delete.room_name}" has been deleted from the database.')
+    messages.success(request,
+                     f'Room name "{room_to_delete.room_name}" has been successfully removed from the database.')
     return redirect(view_rooms)
 
 
-# TODO: Implement book_room
-def book_room(request, pk):
-    pass
+
+class BookRoomView(FormView):
+    template_name = 'book_room.html'
+    title = 'Book Room'
+
+    def get(self, request, pk):
+        form = BookRoomForm()
+        return render(request, self.template_name, {'title': self.title, 'form': form})
