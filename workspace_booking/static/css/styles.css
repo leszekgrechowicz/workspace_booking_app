@@ -1,0 +1,18 @@
+body {
+    max-width: 1100px;
+    margin: 40px auto;
+}
+
+.nav-bar {
+    margin-bottom: 20px;
+}
+
+.nav-links a {
+    margin-right: 20px;
+
+}
+
+.alert {
+    height: 60px;
+    margin-top: 30px;
+}

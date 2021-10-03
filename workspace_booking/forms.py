@@ -15,10 +15,11 @@ class AddRoomForm(forms.Form):
                                              widget=forms.widgets.CheckboxInput())
 
     def clean_room_name(self, *args, **kwargs):
+
         room_name = self.cleaned_data.get("room_name")
 
         try:
-            Office.objects.get(room_name=room_name)
+            Office.objects.get(room_name__iexact=room_name)
 
         except ObjectDoesNotExist:
             return room_name

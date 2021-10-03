@@ -1,34 +1,31 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import FormView
 from .models import Office
 from .forms import AddRoomForm
 from django.contrib import messages
 from django.shortcuts import redirect
 
 
-# Create your views here.
-
-
 def view_rooms(request):
     """Displaying all rooms available"""
 
-    title = "All Offices"
+    title = "All Rooms"
 
-    rooms = Office.objects.all()
+    rooms = Office.objects.all().order_by('room_capacity')
     if not rooms:
-        messages.info(request, 'All Offices are vacant !')
+        messages.info(request, 'All Rooms are vacant !')
 
     return render(request, 'offices_available.html', {'offices': rooms, 'title': title})
 
 
-class AddRoom(TemplateView):
-    """Adding an Office to database"""
+class AddRoom(FormView):
+    """Adding an Office to the database"""
 
-    title = "Add Office"
+    title = "Add Room"
 
     def get(self, request):
         form = AddRoomForm()
-        return render(request, 'add_room.html', {'form': form})
+        return render(request, 'add_room.html', {'title': self.title, 'form': form})
 
     def post(self, request):
         form = AddRoomForm(request.POST or None)
@@ -53,8 +50,23 @@ def room_details(request, pk):
     room = Office.object.get(id=pk)
 
 
+# TODO: Implement edit_room
+class EditRoomView(FormView):
+
+    def get(self, request, pk):
+        pass
 
 
+# TODO: Implement delete_room
+def delete_room(request, pk):
+    """Delete room by the given id"""
+
+    room_to_delete = Office.objects.get(id=pk)
+    room_to_delete.delete()
+    messages.success(request, f'Room name "{room_to_delete.room_name}" has been deleted from the database.')
+    return redirect(view_rooms)
 
 
-
+# TODO: Implement book_room
+def book_room(request, pk):
+    pass

@@ -1,12 +1,31 @@
 {% extends 'base.html' %}
 
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/show_rooms.css' %}">
+
+{% endblock head %}
+
 {% block content %}
 
 {% if offices %}
-<h2>List of offices available: </h2>
+<h2>List of rooms available: </h2>
 {% for office in offices %}
-<a href="{% url 'room-details' pk=office.id %}"><p>{{office.room_name}}</p></a>
-
+<div class="room">
+    <div>
+        <a href="{% url 'room-details' pk=office.id %}"><p>{{office.room_name}}</p></a>
+        <p>Room capacity: {{ office.room_capacity }}</p>
+        <p>Projector: {% if office.projector_available is False %}
+                        Not
+                        {% endif %}
+                         Available</p>
+    </div>
+    <div class="room-links">
+        <a href="{% url 'edit-room' pk=office.id %}">Edit</a>
+        <a methods="POST" href="{% url 'delete-room' pk=office.id %}">Delete</a>
+        <a href="{% url 'book-room' pk=office.id %}">Book</a>
+    </div>
+</div>
 {% endfor %}
 
 {% endif %}
