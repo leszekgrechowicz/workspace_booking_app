@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import FormView
-from .models import Room
+from .models import Room, RoomReservations
 from .forms import AddRoomForm, EditRoomForm, BookRoomForm
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -19,7 +19,7 @@ def view_rooms(request):
     return render(request, 'offices_available.html', {'offices': rooms, 'title': title})
 
 
-class AddRoom(FormView):
+class AddRoomView(FormView):
     """Adding an Room to the database"""
 
     title = "Add Room"
@@ -96,11 +96,12 @@ def delete_room(request, pk):
     return redirect(view_rooms)
 
 
-
 class BookRoomView(FormView):
     template_name = 'book_room.html'
     title = 'Book Room'
+    model = RoomReservations
+    form = BookRoomForm
 
     def get(self, request, pk):
-        form = BookRoomForm()
-        return render(request, self.template_name, {'title': self.title, 'form': form})
+
+        return render(request, self.template_name, {'title': self.title, 'form': self.form})

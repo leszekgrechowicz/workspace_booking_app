@@ -1,5 +1,5 @@
 from django import forms
-from workspace_booking.models import Room
+from workspace_booking.models import Room, RoomReservations
 from django.core.exceptions import ObjectDoesNotExist
 
 ATTRS = {
@@ -33,6 +33,16 @@ class EditRoomForm(forms.Form):
                                              widget=forms.widgets.CheckboxInput())
 
 
-class BookRoomForm(forms.Form):
-    comment = forms.Textarea()
-    date = forms.DateInput()
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+
+class BookRoomForm(forms.ModelForm):
+    class Meta:
+        model = RoomReservations
+        fields = ['date', 'comment']
+        widgets = {
+            'date': DateInput(attrs=ATTRS),
+            'comment': forms.widgets.Textarea(attrs=ATTRS),
+
+        }
