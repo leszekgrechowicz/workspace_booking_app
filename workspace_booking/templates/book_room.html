@@ -2,6 +2,8 @@
 
 {% block content %}
 
+<p>Booking for : {{ room.room_name }}</p>
+
 <form class="form" method="POST">
     {% csrf_token %}
     {{ form.as_p }}

@@ -5,6 +5,8 @@ body {
 
 .nav-bar {
     margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .nav-links a {
@@ -20,4 +22,8 @@ body {
 footer a {
     text-decoration: none;
     color: black;
+}
+
+.errorlist {
+    display: none;
 }

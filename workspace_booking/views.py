@@ -9,24 +9,24 @@ from django.db import IntegrityError
 
 def view_rooms(request):
     """Displaying all rooms available"""
-
+    template_name = 'offices_available.html'
     title = "All Rooms"
 
     rooms = Room.objects.all().order_by('room_capacity')
     if not rooms:
         messages.info(request, 'All Rooms are vacant !')
 
-    return render(request, 'offices_available.html', {'offices': rooms, 'title': title})
+    return render(request, template_name, {'offices': rooms, 'title': title})
 
 
 class AddRoomView(FormView):
     """Adding an Room to the database"""
-
+    template_name = 'add_room.html'
     title = "Add Room"
 
     def get(self, request):
         form = AddRoomForm()
-        return render(request, 'add_room.html', {'title': self.title, 'form': form})
+        return render(request, self.template_name, {'title': self.title, 'form': form})
 
     def post(self, request):
         form = AddRoomForm(request.POST or None)
@@ -40,7 +40,7 @@ class AddRoomView(FormView):
 
             return redirect(view_rooms)
 
-        return render(request, 'add_room.html', {'title': self.title, 'form': form})
+        return render(request, self.template_name, {'title': self.title, 'form': form})
 
 
 def room_details(request, pk):
@@ -99,9 +99,26 @@ def delete_room(request, pk):
 class BookRoomView(FormView):
     template_name = 'book_room.html'
     title = 'Book Room'
-    model = RoomReservations
-    form = BookRoomForm
 
     def get(self, request, pk):
+        room_to_book = Room.objects.get(id=pk)
+        form = BookRoomForm()
+        return render(request, self.template_name, {'room': room_to_book, 'title': self.title, 'form': form})
 
-        return render(request, self.template_name, {'title': self.title, 'form': self.form})
+    def post(self, request, pk):
+        form = BookRoomForm(request.POST or None)
+        room_to_book = Room.objects.get(id=pk)
+        if form.is_valid():
+            date = form.cleaned_data['date']
+            company = form.cleaned_data['company']
+            comment = form.cleaned_data['comment']
+
+            try:
+                RoomReservations.objects.create(room=room_to_book, date=date, company_name=company, comment=comment)
+            except IntegrityError:
+                messages.warning(request, f'Room "{room_to_book.room_name}" is already booked at {date}')
+
+            messages.success(request, f'Room "{room_to_book.room_name}" has been booked for {date} with {company}. ')
+            return redirect(view_rooms)
+        # messages.warning(request, f'{form.errors}')
+        return render(request, self.template_name, {'room': room_to_book, 'title': self.title, 'form': form})
