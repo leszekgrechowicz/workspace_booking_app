@@ -5,12 +5,24 @@ from datetime import datetime
 
 ATTRS = {
     'class': 'form-control mt-1',
+
+}
+
+BOOK_ROOM_ATTRS = {
+    'class': 'form-control mt-1',
+    'style': 'margin: auto;',
+}
+
+TEXT_AREA_ATTRS = {
+    'class': 'form-control mt-1',
+    'style': 'max-height: 125px;',
+
 }
 
 
 class AddRoomForm(forms.Form):
-    room_name = forms.CharField(max_length=255, widget=forms.TextInput(attrs=ATTRS))
-    room_capacity = forms.IntegerField(min_value=0, max_value=10000, widget=forms.NumberInput(attrs=ATTRS))
+    room_name = forms.CharField(max_length=255, widget=forms.TextInput(attrs=BOOK_ROOM_ATTRS))
+    room_capacity = forms.IntegerField(min_value=0, max_value=10000, widget=forms.NumberInput(attrs=BOOK_ROOM_ATTRS))
     projector_available = forms.BooleanField(label='Is projector available', label_suffix=":", required=False)
 
     def clean_room_name(self, *args, **kwargs):
@@ -40,7 +52,7 @@ class DateInput(forms.DateInput):
 class BookRoomForm(forms.Form):
     date = forms.DateField(widget=DateInput(attrs=ATTRS))
     company = forms.CharField(max_length=255, widget=forms.TextInput(attrs=ATTRS), required=False)
-    comment = forms.CharField(widget=forms.widgets.Textarea(attrs=ATTRS))
+    comment = forms.CharField(widget=forms.widgets.Textarea(attrs=TEXT_AREA_ATTRS))
 
     def clean_date(self):
         date = self.cleaned_data.get('date')

@@ -1,16 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Dosis:wght@600;800&family=Ephesis&display=swap');
+
+:root {
+    --red: #be1818
+}
+
+
 body {
+    font-family: 'Dosis', sans-serif;
     max-width: 1250px;
     margin: 40px auto;
+    font-size: 1.1rem;
+    letter-spacing: 0.6px;
 }
 
 .nav-bar {
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .nav-links a {
     margin-right: 20px;
+    margin-bottom: 10px;
 
 }
 
@@ -27,3 +39,21 @@ footer a {
 .errorlist {
     display: none;
 }
+
+.logo {
+
+}
+.span-logo1 {
+    font-family: 'Black Ops One', cursive;
+    font-size: 2em;
+    color: var(--red);
+    letter-spacing: -7px;
+
+}
+
+.span-logo2 {
+    font-family: 'Ephesis', cursive;
+    font-size: 1em;
+    margin-left: -4px;
+}
+
