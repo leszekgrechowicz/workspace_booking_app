@@ -7,8 +7,11 @@ class Room(models.Model):
     room_capacity = models.PositiveSmallIntegerField()
     projector_available = models.BooleanField(default=False)
 
+    def __str__(self):
+        return
 
-class RoomReservations(models.Model):
+
+class Reservation(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     date = models.DateField()
     comment = models.TextField(null=True)

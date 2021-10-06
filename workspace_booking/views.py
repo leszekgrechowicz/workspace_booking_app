@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import FormView
-from .models import Room, RoomReservations
+from .models import Room, Reservation
 from .forms import AddRoomForm, EditRoomForm, BookRoomForm
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -102,6 +102,8 @@ class BookRoomView(FormView):
 
     def get(self, request, pk):
         room_to_book = Room.objects.get(id=pk)
+
+
         form = BookRoomForm()
         return render(request, self.template_name, {'room': room_to_book, 'title': self.title, 'form': form})
 
@@ -114,9 +116,10 @@ class BookRoomView(FormView):
             comment = form.cleaned_data['comment']
 
             try:
-                RoomReservations.objects.create(room=room_to_book, date=date, company_name=company, comment=comment)
+                Reservation.objects.create(room=room_to_book, date=date, company_name=company, comment=comment)
             except IntegrityError:
                 messages.warning(request, f'Room "{room_to_book.room_name}" is already booked at {date}')
+                return render(request, self.template_name, {'room': room_to_book, 'title': self.title, 'form': form})
 
             messages.success(request, f'Room "{room_to_book.room_name}" has been booked for {date} with {company}. ')
             return redirect(view_rooms)

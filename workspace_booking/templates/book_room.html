@@ -1,14 +1,58 @@
 {% extends 'base.html' %}
 
+
+{% block head %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/book_room.css' %}">
+
+{% endblock head %}
+
 {% block content %}
 
-<p>Booking for : {{ room.room_name }}</p>
+<div class="container">
 
-<form class="form" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit">
-</form>
+    <div class="form-half">
+        <p><strong>Booking for: <span class="room-name">{{ room.room_name }}</span></strong></p>
 
+        <form class="form" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 
+    <div class="booking-half">
+
+        <p><strong><span class="room-name">"{{ room.room_name}}"</span> bookings: </strong></p>
+
+        <table class="table">
+            <thead class="thead">
+            <tr class="">
+                <th class="col-1" scope="col">Ref.No.</th>
+                <th class="col-2" scope="col">Date:</th>
+                <th class="col-2" scope="col">Booked By:</th>
+                <th class="col-4" scope="col">Comments:</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if room.reservation_set.all %}
+            {% for reservation in room.reservation_set.all %}
+
+            <tr class="">
+                <th class="col-1" scope="row">{{reservation.id}}</th>
+                <td class="col-2">{{reservation.date}}</td>
+                <td class="col-2">{{reservation.company_name}}</td>
+                <td class="col-4">{{reservation.comment}}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <div class="alert alert-danger" role="alert">
+                No further bookings for this room yet.
+            </div>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock content %}
