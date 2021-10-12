@@ -19,10 +19,15 @@
     .container {
         display: flex;
         justify-content: space-between;
+        align-items: baseline;
     }
 
-    .container div {
-        width: 48%;
+    .form-half {
+        width: 35%;
+    }
+
+    .booking-half {
+        width: 60%;
     }
 
 }

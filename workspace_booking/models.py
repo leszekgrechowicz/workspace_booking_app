@@ -8,7 +8,7 @@ class Room(models.Model):
     projector_available = models.BooleanField(default=False)
 
     def __str__(self):
-        return
+        return f"{self.room_name}"
 
 
 class Reservation(models.Model):

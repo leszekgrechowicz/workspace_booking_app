@@ -16,6 +16,7 @@
 </head>
 
 <body>
+
 <header>
     <div class="nav-bar">
         <h1 class="logo"><span class="span-logo1">Work</span><span class="span-logo2">Spacer</span></h1>
@@ -28,37 +29,40 @@
     </div>
 </header>
 
-{% if messages %}
-{% for message in messages %}
+<section class="main">
+    {% if messages %}
+    {% for message in messages %}
 
-<div{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+    <div
+    {% if message.tags %} class="{{ message.tags }}"{% endif %}>
     <p><strong>{{ message }}</strong></p>
 
-</div>
-{% endfor %}
-{% endif %}
+    </div>
+    {% endfor %}
+    {% endif %}
 
 
-{% if form.errors %}
-{% for field in form %}
-{% for error in field.errors %}
-<div class="alert alert-danger">
-    <strong>{{ error|escape }}</strong>
-</div>
-{% endfor %}
-{% endfor %}
-{% for error in form.non_field_errors %}
-<div class="alert alert-danger">
-    <strong>{{ error|escape }}</strong>
-</div>
-{% endfor %}
-{% endif %}
+    {% if form.errors %}
+    {% for field in form %}
+    {% for error in field.errors %}
+    <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+    <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    {% endif %}
 
-{% block content %}
-{% endblock content %}
+    {% block content %}
+    {% endblock content %}
+</section>
 
-<footer class="page-footer font-small pt-4 fixed-bottom">
-    <div class="p-4 bg-secondary text-white text-center">©
+<footer class="page-footer font-small fixed-bottom border-top">
+    <div class="p-4 text-mutted text-center">©
         <script>
             document.write(new Date().getFullYear());
         </script>
@@ -66,6 +70,7 @@
         <a href="https://github.com/leszekgrechowicz">GitHub</a>
     </div>
 </footer>
+
 </body>
 
 </html>

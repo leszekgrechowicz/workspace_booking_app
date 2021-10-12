@@ -11,19 +11,24 @@
 {% if offices %}
 <h2>List of rooms available: </h2>
 {% for office in offices %}
-<div class="room">
-    <div>
-        <a href="{% url 'room-details' pk=office.id %}"><p>{{office.room_name}}</p></a>
-        <p>Room capacity: {{ office.room_capacity }}</p>
-        <p>Projector: {% if office.projector_available is False %}
-                        Not
-                        {% endif %}
-                         Available</p>
-    </div>
-    <div class="room-links">
-        <a href="{% url 'edit-room' pk=office.id %}">Edit</a>
-        <a methods="POST" href="{% url 'delete-room' pk=office.id %}">Delete</a>
-        <a href="{% url 'book-room' pk=office.id %}">Book</a>
+<div class="room-container">
+    <div class="room">
+        <div class="room-details">
+            <p>Room name: <span class="room-name">{{office.room_name}}</span></p>
+            <p>Room capacity: {{ office.room_capacity }}</p>
+            <p>Projector: {% if office.projector_available is False %}
+                Not
+                {% endif %}
+                Available</p>
+        </div>
+        <div class="room-links">
+            <a class="bttn-book" href="{% url 'book-room' pk=office.id %}">Book</a>
+            <div class="div-edit-del">
+                <a class="edit-btn" href="{% url 'edit-room' pk=office.id %}">Edit</a>
+                <a class="delete-btn" methods="POST" href="{% url 'delete-room' pk=office.id %}">Delete</a>
+            </div>
+
+        </div>
     </div>
 </div>
 {% endfor %}

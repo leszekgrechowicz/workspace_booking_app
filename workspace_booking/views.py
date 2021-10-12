@@ -5,6 +5,7 @@ from .forms import AddRoomForm, EditRoomForm, BookRoomForm
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.db import IntegrityError
+from datetime import datetime
 
 
 def view_rooms(request):
@@ -101,8 +102,8 @@ class BookRoomView(FormView):
     title = 'Book Room'
 
     def get(self, request, pk):
+        todays_date = datetime.now().date()
         room_to_book = Room.objects.get(id=pk)
-
 
         form = BookRoomForm()
         return render(request, self.template_name, {'room': room_to_book, 'title': self.title, 'form': form})

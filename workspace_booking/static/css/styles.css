@@ -11,6 +11,8 @@ body {
     margin: 40px auto;
     font-size: 1.1rem;
     letter-spacing: 0.6px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .nav-bar {
@@ -31,9 +33,14 @@ body {
     margin-top: 30px;
 }
 
+footer {
+    max-width: inherit;
+    margin: auto;
+}
+
 footer a {
     text-decoration: none;
-    color: black;
+    color: var(--red);
 }
 
 .errorlist {
@@ -57,3 +64,7 @@ footer a {
     margin-left: -4px;
 }
 
+.main {
+    max-width: 1000px;
+    margin: 20px auto;
+}
