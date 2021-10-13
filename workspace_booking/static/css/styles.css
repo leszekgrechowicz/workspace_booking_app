@@ -4,10 +4,13 @@
     --red: #be1818
 }
 
+html {
+    width: 100vw;
+}
 
 body {
     font-family: 'Dosis', sans-serif;
-    max-width: 1250px;
+    max-width: 1150px;
     margin: 40px auto;
     font-size: 1.1rem;
     letter-spacing: 0.6px;
@@ -23,7 +26,6 @@ body {
 }
 
 .nav-links a {
-    margin-right: 20px;
     margin-bottom: 10px;
 
 }
@@ -65,6 +67,6 @@ footer a {
 }
 
 .main {
-    max-width: 1000px;
+    max-width: 900px;
     margin: 20px auto;
 }

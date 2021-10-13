@@ -1,19 +1,19 @@
 .room-name {
-
     font-family: 'Dosis', sans-serif;
-    font-size: 2em;
+    font-size: 1.5em;
 }
 
 
 .room {
-    display: flex;
+    /*display: flex;*/
     margin: 30px auto;
     justify-content: space-between;
+    max-width: 200px;
 
 }
 
 .room-container {
-    position: relative;
+    display: flex;
 }
 
 /*.room ::before {*/
@@ -28,17 +28,17 @@
 
 /*}*/
 
-.room ::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -10px;
-    width: 25%;
-    height: 5px;
-    background: rgba(183, 5, 5, 0.91);
-    opacity: 0.4;
+/*.room ::after {*/
+/*    content: '';*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: -10px;*/
+/*    width: 25%;*/
+/*    height: 5px;*/
+/*    background: rgba(183, 5, 5, 0.91);*/
+/*    opacity: 0.4;*/
 
-}
+/*}*/
 
 .room-details {
     margin-top: 20px;
@@ -55,7 +55,7 @@
 .bttn-book {
     width: 150px;
     height: 150px;
-    border: 3px solid var(--red);
+    border: 3px solid gray;
     border-radius: 10px;
     margin-right: 10px;
     text-align: center;
@@ -63,11 +63,13 @@
     font-size: 1.5em;
     color:var(--red);
     text-decoration: none;
+    background: rgba(19, 166, 4, 0.50);
+    color: white;
 }
 
 .bttn-book:hover {
-    background: #13a604;
-    color: white;
+    background: white;
+    color: #13a604;
 }
 
 .div-edit-del {
@@ -76,27 +78,43 @@
     justify-content: space-between;
     text-align: center;
 
-
 }
 
 .edit-btn , .delete-btn {
     padding: 20px 35px;
     border-radius: 10px;
-    border: 3px solid var(--red);
+    border: 3px solid dimgrey;
     text-decoration: none;
     color: var(--red);
 }
 
-.edit-btn:hover {
-    background: #1687A7;
+.edit-btn {
+    background: #1687A7 ;
     color: white;
 }
 
-.delete-btn:hover {
+.delete-btn {
     background: #EC4646;
     color: white;
 }
 
+
+.edit-btn:hover {
+    background: white;
+    color: #1687A7;
+}
+
+.delete-btn:hover {
+    background: white;
+    color: #EC4646;
+}
+
+.room-h2 {
+    background: rgba(128, 128, 128, 0.30);
+    padding: 7px 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(128, 128, 128, 0.41);
+}
 
 @media screen and (max-width: 700px) {
 

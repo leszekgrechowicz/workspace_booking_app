@@ -22,7 +22,12 @@ TEXT_AREA_ATTRS = {
 
 class AddRoomForm(forms.Form):
     room_name = forms.CharField(max_length=255, widget=forms.TextInput(attrs=BOOK_ROOM_ATTRS))
-    room_capacity = forms.IntegerField(min_value=0, max_value=10000, widget=forms.NumberInput(attrs=BOOK_ROOM_ATTRS))
+    room_capacity = forms.IntegerField(min_value=0, max_value=10000,
+                                       widget=forms.NumberInput(attrs=BOOK_ROOM_ATTRS))
+
+    size = forms.CharField(max_length=70, required=False, widget=forms.TextInput(attrs=BOOK_ROOM_ATTRS))
+    building_floor = forms.CharField(max_length=70, required=False, widget=forms.TextInput(attrs=BOOK_ROOM_ATTRS))
+    image = forms.ImageField(required=False)
     projector_available = forms.BooleanField(label='Is projector available', label_suffix=":", required=False)
 
     def clean_room_name(self, *args, **kwargs):

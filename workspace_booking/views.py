@@ -30,13 +30,22 @@ class AddRoomView(FormView):
         return render(request, self.template_name, {'title': self.title, 'form': form})
 
     def post(self, request):
-        form = AddRoomForm(request.POST or None)
+        form = AddRoomForm(request.POST, request.FILES)
         if form.is_valid():
             room_name = form.cleaned_data['room_name']
             room_capacity = form.cleaned_data['room_capacity']
+            size = form.cleaned_data['size']
+            building_floor = form.cleaned_data['building_floor']
+            image = form.cleaned_data['image']
             projector_available = form.cleaned_data['projector_available']
-            room = Room.objects.create(room_name=room_name, room_capacity=room_capacity,
-                                       projector_available=projector_available)
+
+            room = Room.objects.create(room_name=room_name,
+                                       room_capacity=room_capacity,
+                                       projector_available=projector_available,
+                                       size=size,
+                                       building_floor=building_floor,
+                                       image=image
+                                       )
             messages.success(request, f'Room "{room.room_name}" has been added to the database.')
 
             return redirect(view_rooms)
@@ -104,9 +113,13 @@ class BookRoomView(FormView):
     def get(self, request, pk):
         todays_date = datetime.now().date()
         room_to_book = Room.objects.get(id=pk)
+        # room_to_book = Room.objects.filter(id=pk, reservation__date__gt=todays_date)
 
         form = BookRoomForm()
-        return render(request, self.template_name, {'room': room_to_book, 'title': self.title, 'form': form})
+        return render(request, self.template_name, {'date': todays_date,
+                                                    'room': room_to_book,
+                                                    'title': self.title,
+                                                    'form': form})
 
     def post(self, request, pk):
         form = BookRoomForm(request.POST or None)
