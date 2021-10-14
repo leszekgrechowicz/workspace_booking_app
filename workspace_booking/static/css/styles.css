@@ -4,6 +4,10 @@
     --red: #be1818
 }
 
+* {
+    box-sizing: border-box;
+}
+
 html {
     width: 100vw;
 }
@@ -11,11 +15,10 @@ html {
 body {
     font-family: 'Dosis', sans-serif;
     max-width: 1150px;
-    margin: 40px auto;
+    margin: 10px auto;
     font-size: 1.1rem;
     letter-spacing: 0.6px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 0 33px;
 }
 
 .nav-bar {
