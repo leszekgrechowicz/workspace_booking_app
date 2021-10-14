@@ -20,22 +20,24 @@
 <header>
     <div class="nav-bar">
         <h1 class="logo"><span class="span-logo1">Work</span><span class="span-logo2">Spacer</span></h1>
-        <div class="nav-links">
-            <a class="btn btn-outline-danger" href="{% url 'offices' %}">Rooms</a>
-            <a class="btn btn-outline-danger" href="{% url 'add-office' %}">Add room</a>
 
-
-        </div>
     </div>
 </header>
 
-<section class="main">
+<aside class="sidebar">
+
+    <a class="btn btn-outline-danger" href="{% url 'offices' %}">Rooms</a>
+    <a class="btn btn-outline-danger" href="{% url 'add-office' %}">Add room</a>
+
+</aside>
+
+<section class="content">
     {% if messages %}
     {% for message in messages %}
 
     <div
-    {% if message.tags %} class="{{ message.tags }}"{% endif %}>
-    <p><strong>{{ message }}</strong></p>
+            {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+        <p><strong>{{ message }}</strong></p>
 
     </div>
     {% endfor %}

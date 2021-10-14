@@ -14,7 +14,7 @@ html {
 
 body {
     font-family: 'Dosis', sans-serif;
-    max-width: 1150px;
+    /*max-width: 1150px;*/
     margin: 10px auto;
     font-size: 1.1rem;
     letter-spacing: 0.6px;
@@ -22,10 +22,7 @@ body {
 }
 
 .nav-bar {
-    /*margin-bottom: 20px;*/
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
 }
 
 .nav-links a {
@@ -55,6 +52,7 @@ footer a {
 .logo {
 
 }
+
 .span-logo1 {
     font-family: 'Black Ops One', cursive;
     font-size: 2em;
@@ -72,4 +70,54 @@ footer a {
 .main {
     max-width: 900px;
     margin: 20px auto;
+}
+
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+
+.sidebar a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+}
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
 }
