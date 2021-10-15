@@ -139,3 +139,13 @@ class BookRoomView(FormView):
             return redirect(view_rooms)
         # messages.warning(request, f'{form.errors}')
         return render(request, self.template_name, {'room': room_to_book, 'title': self.title, 'form': form})
+
+
+def add_picture(request, pk):
+    """Adds room picture to the database"""
+
+    Room.objects.get(id=pk)
+    room.update
+    messages.success(request,
+                     f'Room name "{room_to_delete.room_name}" has been successfully removed from the database.')
+    return redirect(view_rooms)

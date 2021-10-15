@@ -1,53 +1,35 @@
 
 .rooms-container {
-    display: grid;
-    grid-template-columns: repeat(2, 50%);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
 }
+
+.room {
+    border: 2px solid dimgrey;
+    padding: 15px 30px;
+    margin-right: 7px;
+    margin-bottom: 7px;
+    max-width: 420px;
+    min-width: 420px;
+    min-height: 550px;
+}
+
+.room img {width: 100%}
 
 .room-name {
     font-family: 'Dosis', sans-serif;
-    font-size: 1.5em;
+    font-size: 1.3em;
+    text-align: center;
+    border-bottom: 3px solid dimgrey;
+
+
+    padding: 3px 0;
 }
-
-
-.room {
-    /*display: flex;*/
-
-    /*justify-content: space-between;*/
-    border: 2px solid dimgrey;
-    padding: 45px 30px;
-    min-width: 50%;
-
-}
-
-
-/*.room ::before {*/
-/*    content: '';*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    left: -10px;*/
-/*    width: 5px;*/
-/*    height: 55%;*/
-/*    background: rgba(183, 5, 5, 0.91);*/
-/*    opacity: 0.4;*/
-
-/*}*/
-
-/*.room ::after {*/
-/*    content: '';*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    left: -10px;*/
-/*    width: 25%;*/
-/*    height: 5px;*/
-/*    background: rgba(183, 5, 5, 0.91);*/
-/*    opacity: 0.4;*/
-
-/*}*/
 
 .room-details {
-    /*margin-top: 20px;*/
-    margin-left: 20px;
+
 }
 
 .room-links {
@@ -59,18 +41,16 @@
 }
 
 .bttn-book {
-    width: 150px;
-    height: 150px;
+    width: 100%;
+    height: auto;
     border: 3px solid gray;
     border-radius: 10px;
     margin-right: 10px;
     text-align: center;
-    padding-top: 50px;
+    color: black;
     font-size: 1.5em;
-    color:var(--red);
+
     text-decoration: none;
-    background: rgba(19, 166, 4, 0.50);
-    color: white;
 }
 
 .bttn-book:hover {
@@ -115,12 +95,6 @@
     color: #EC4646;
 }
 
-.room-h2 {
-    background: rgba(128, 128, 128, 0.30);
-    padding: 7px 10px;
-    border-radius: 5px;
-    border: 1px solid rgba(128, 128, 128, 0.41);
-}
 
 @media screen and (max-width: 700px) {
 

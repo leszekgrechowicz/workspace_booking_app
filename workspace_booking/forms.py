@@ -67,3 +67,7 @@ class BookRoomForm(forms.Form):
             return date
 
         raise forms.ValidationError(f"Invalid date, you cannot book for the past date !")
+
+
+class AddPhoto(forms.Form):
+    image = forms.ImageField(required=True)

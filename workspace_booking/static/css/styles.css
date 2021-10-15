@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Dosis:wght@600;800&family=Ephesis&display=swap');
 
 :root {
-    --red: #be1818
+    --red: rgba(190, 24, 24, 1)
 }
 
 * {
@@ -17,8 +17,15 @@ body {
     /*max-width: 1150px;*/
     margin: 10px auto;
     font-size: 1.1rem;
-    letter-spacing: 0.6px;
+    letter-spacing: 0.1px;
     padding: 0 33px;
+}
+
+.main-h2 {
+    background: rgba(128, 128, 128, 0.30);
+    padding: 7px 10px;
+
+    border: 1px solid rgba(128, 128, 128, 0.41);
 }
 
 .nav-bar {
@@ -50,7 +57,7 @@ footer a {
 }
 
 .logo {
-
+    margin-bottom: 0;
 }
 
 .span-logo1 {
@@ -74,7 +81,7 @@ footer a {
 
 .sidebar {
     margin: 0;
-    padding: 0;
+    padding: 7px 0 0 0;
     width: 200px;
     background-color: #f1f1f1;
     position: fixed;
@@ -83,41 +90,58 @@ footer a {
 }
 
 .sidebar a {
-  display: block;
-  color: black;
-  padding: 16px;
-  text-decoration: none;
+    display: block;
+    color: black;
+    padding: 10px 16px;
+    text-decoration: none;
 }
 
 .sidebar a.active {
-  background-color: #04AA6D;
-  color: white;
+    background-color: #04AA6D;
+    color: white;
 }
 
 .sidebar a:hover:not(.active) {
-  background-color: #555;
-  color: white;
+    background-color: #555;
+    color: white;
 }
 
 .content {
-  margin-left: 200px;
-  padding: 1px 16px;
-  height: 1000px;
+    margin-left: 200px;
+    padding: 1px 10px;
+    height: 1000px;
 }
 
 @media screen and (max-width: 700px) {
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-  }
-  .sidebar a {float: left;}
-  div.content {margin-left: 0;}
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .sidebar a {
+        float: left;
+    }
+
+    div.content {
+        margin-left: 0;
+    }
+
+    .content {
+        margin-left: 0;
+        padding: 0;
+    }
+
+    .sidebar {
+        margin-bottom: 10px;
+    }
+
 }
 
+
 @media screen and (max-width: 400px) {
-  .sidebar a {
-    text-align: center;
-    float: none;
-  }
+    .sidebar a {
+        text-align: center;
+        float: none;
+    }
 }
