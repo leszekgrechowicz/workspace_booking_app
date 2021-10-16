@@ -21,30 +21,28 @@ body {
     padding: 0 33px;
 }
 
-.main-h2 {
-    background: rgba(128, 128, 128, 0.30);
-    padding: 7px 10px;
-
-    border: 1px solid rgba(128, 128, 128, 0.41);
-}
-
 .nav-bar {
-
-}
-
-.nav-links a {
-    margin-bottom: 10px;
+    position: fixed;
+    left: 35px;
+    top: 0;
+    width: 100%;
+    margin: auto;
 
 }
 
 .alert {
     height: 60px;
     margin-top: 30px;
+    margin-bottom: -58px;
 }
 
 footer {
-    max-width: inherit;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
     margin: auto;
+    background: white;
 }
 
 footer a {
@@ -62,7 +60,7 @@ footer a {
 
 .span-logo1 {
     font-family: 'Black Ops One', cursive;
-    font-size: 2em;
+    font-size: 1.7em;
     color: var(--red);
     letter-spacing: -7px;
 
@@ -74,15 +72,10 @@ footer a {
     margin-left: -4px;
 }
 
-.main {
-    max-width: 900px;
-    margin: 20px auto;
-}
-
 .sidebar {
-    margin: 0;
+    margin: 70px 0 0 0;
     padding: 7px 0 0 0;
-    width: 200px;
+    width: 265px;
     background-color: #f1f1f1;
     position: fixed;
     height: 100%;
@@ -107,9 +100,17 @@ footer a {
 }
 
 .content {
-    margin-left: 200px;
+    margin-left: 266px;
     padding: 1px 10px;
     height: 1000px;
+
+}
+
+.content-h4 {
+    background: rgba(128, 128, 128, 0.30);
+    padding: 7px 10px;
+    margin-top: 70px;
+    border: 1px solid rgba(128, 128, 128, 0.41);
 }
 
 @media screen and (max-width: 700px) {
@@ -136,12 +137,20 @@ footer a {
         margin-bottom: 10px;
     }
 
+    .content-h4 {
+        margin-top: unset;
+    }
+
 }
 
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 600px) {
     .sidebar a {
         text-align: center;
         float: none;
+    }
+
+    .content-h4 {
+        margin-top: unset;
     }
 }
