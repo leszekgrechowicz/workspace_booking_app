@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/show_rooms.css' %}">
+<link rel="stylesheet" href="{% static 'css/edit_room.css' %}">
+
+{% endblock head %}
+
+{% block content %}
+<h4 class="content-h4">Edit Room:</h4>
+
+<div class="div-edit-room">
+    <div class="room">
+        <div>
+            <p class="room-name"><span>{{office.room_name}}</span></p>
+        </div>
+        <div class="room-pic">
+
+            {% if office.image %}
+            <img src="{{ office.image.url }}" alt="office pic">
+
+            {% else %}
+            <div>
+                <img src="/media/images/no_image.png" alt="No picture available">
+
+            </div>
+            {% endif %}
+
+        </div>
+
+
+        <div class="room-details">
+
+            <p>Capacity: {{ office.room_capacity }}</p>
+            <p>Size: {{ office.size }}</p>
+            <p>Location: {{ office.building_floor }}</p>
+            <p>Projector: {% if office.projector_available is False %}
+                Not
+                {% endif %}
+                Available</p>
+        </div>
+
+    </div>
+    <div class="edit-form">
+        <form class="form" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input class="btn btn-outline-secondary" type="submit" value="Submit">
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

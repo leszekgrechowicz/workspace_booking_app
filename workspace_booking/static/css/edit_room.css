@@ -1,0 +1,12 @@
+.div-edit-room {
+    display: flex;
+}
+
+.edit-form {
+    min-width: 400px;
+    margin-left: 20px;
+}
+
+.room {
+    min-height: 423px;
+}

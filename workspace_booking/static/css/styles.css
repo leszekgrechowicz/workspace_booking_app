@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Dosis:wght@600;800&family=Ephesis&display=swap');
 
 :root {
-    --red: #be1818
+    --red: rgba(190, 24, 24, 1)
 }
 
 * {
@@ -14,33 +14,35 @@ html {
 
 body {
     font-family: 'Dosis', sans-serif;
-    max-width: 1150px;
+    /*max-width: 1150px;*/
     margin: 10px auto;
     font-size: 1.1rem;
-    letter-spacing: 0.6px;
+    letter-spacing: 0.1px;
     padding: 0 33px;
 }
 
 .nav-bar {
-    /*margin-bottom: 20px;*/
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.nav-links a {
-    margin-bottom: 10px;
-
+    position: fixed;
+    left: 35px;
+    top: 0;
+    width: 100%;
+    margin: auto;
+    background: white;
 }
 
 .alert {
     height: 60px;
-    margin-top: 30px;
+    margin-top: 70px;
+    margin-bottom: -58px;
 }
 
 footer {
-    max-width: inherit;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
     margin: auto;
+    background: white;
 }
 
 footer a {
@@ -53,11 +55,12 @@ footer a {
 }
 
 .logo {
-
+    margin-bottom: 0;
 }
+
 .span-logo1 {
     font-family: 'Black Ops One', cursive;
-    font-size: 2em;
+    font-size: 1.7em;
     color: var(--red);
     letter-spacing: -7px;
 
@@ -69,7 +72,85 @@ footer a {
     margin-left: -4px;
 }
 
-.main {
-    max-width: 900px;
-    margin: 20px auto;
+.sidebar {
+    margin: 70px 0 0 0;
+    padding: 7px 0 0 0;
+    width: 265px;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+.sidebar a {
+    display: block;
+    color: black;
+    padding: 10px 16px;
+    text-decoration: none;
+}
+
+.sidebar a.active {
+    background-color: #04AA6D;
+    color: white;
+}
+
+.sidebar a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+
+.content {
+    margin-left: 266px;
+    padding: 1px 10px;
+    height: 1000px;
+
+}
+
+.content-h4 {
+    background: rgba(128, 128, 128, 0.30);
+    padding: 7px 10px;
+    margin-top: 70px;
+    border: 1px solid rgba(128, 128, 128, 0.41);
+}
+
+@media screen and (max-width: 1000px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .sidebar a {
+        float: left;
+    }
+
+    div.content {
+        margin-left: 0;
+    }
+
+    .content {
+        margin-left: 0;
+        padding: 0;
+    }
+
+    .sidebar {
+        margin-bottom: 10px;
+    }
+
+    .content-h4 {
+        margin-top: unset;
+    }
+
+}
+
+
+@media screen and (max-width: 700px) {
+    .sidebar a {
+        text-align: center;
+        float: none;
+    }
+
+    .content-h4 {
+        margin-top: unset;
+    }
 }

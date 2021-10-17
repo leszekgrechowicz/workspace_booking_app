@@ -27,7 +27,7 @@ class AddRoomForm(forms.Form):
 
     size = forms.CharField(max_length=70, required=False, widget=forms.TextInput(attrs=BOOK_ROOM_ATTRS))
     building_floor = forms.CharField(max_length=70, required=False, widget=forms.TextInput(attrs=BOOK_ROOM_ATTRS))
-    image = forms.ImageField(required=False)
+    image = forms.ImageField(required=False, widget=forms.FileInput(attrs=ATTRS))
     projector_available = forms.BooleanField(label='Is projector available', label_suffix=":", required=False)
 
     def clean_room_name(self, *args, **kwargs):
@@ -43,11 +43,19 @@ class AddRoomForm(forms.Form):
         raise forms.ValidationError(f"Room '{room_name}' already exist in the data base !")
 
 
-class EditRoomForm(forms.Form):
-    room_name = forms.CharField(max_length=255, widget=forms.TextInput(attrs=ATTRS))
-    room_capacity = forms.IntegerField(min_value=0, max_value=10000, widget=forms.NumberInput(attrs=ATTRS))
-    projector_available = forms.BooleanField(label='Is projector available', label_suffix=":", required=False,
-                                             widget=forms.widgets.CheckboxInput())
+class EditRoomForm(forms.ModelForm):
+    class Meta:
+        model = Room
+        fields = ('room_name', 'room_capacity', 'size', 'building_floor', 'image', 'projector_available')
+        widgets = {
+            'room_name': forms.TextInput(attrs=BOOK_ROOM_ATTRS),
+            'room_capacity': forms.NumberInput(attrs=BOOK_ROOM_ATTRS),
+            'size': forms.TextInput(attrs=BOOK_ROOM_ATTRS),
+            'building_floor': forms.TextInput(attrs=BOOK_ROOM_ATTRS),
+            'image': forms.FileInput(attrs=ATTRS),
+        }
+
+
 
 
 class DateInput(forms.DateInput):
@@ -67,3 +75,7 @@ class BookRoomForm(forms.Form):
             return date
 
         raise forms.ValidationError(f"Invalid date, you cannot book for the past date !")
+
+
+class AddPhotoForm(forms.Form):
+    image = forms.ImageField(required=True, widget=forms.FileInput(attrs=ATTRS))
