@@ -1,27 +1,29 @@
 from django.shortcuts import render
 from django.views.generic import FormView
 from .models import Room, Reservation
-from .forms import AddRoomForm, EditRoomForm, BookRoomForm
+from .forms import AddRoomForm, BookRoomForm, AddPhotoForm, EditRoomForm
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.db import IntegrityError
 from datetime import datetime
 
 
-def view_rooms(request):
+class RoomsView(FormView):
     """Displaying all rooms available"""
-    template_name = 'offices_available.html'
+    template_name = 'show_rooms.html'
     title = "All Rooms"
 
-    rooms = Room.objects.all().order_by('room_capacity')
-    if not rooms:
-        messages.info(request, 'All Rooms are vacant !')
+    def get(self, request):
+        rooms = Room.objects.all().order_by('room_capacity')
+        if not rooms:
+            messages.info(request, 'All Rooms are vacant !')
 
-    return render(request, template_name, {'offices': rooms, 'title': title})
+        return render(request, self.template_name, {'rooms': rooms,
+                                                    'title': self.title})
 
 
 class AddRoomView(FormView):
-    """Adding an Room to the database"""
+    """Adding the Room to the database"""
     template_name = 'add_room.html'
     title = "Add Room"
 
@@ -32,23 +34,16 @@ class AddRoomView(FormView):
     def post(self, request):
         form = AddRoomForm(request.POST, request.FILES)
         if form.is_valid():
-            room_name = form.cleaned_data['room_name']
-            room_capacity = form.cleaned_data['room_capacity']
-            size = form.cleaned_data['size']
-            building_floor = form.cleaned_data['building_floor']
-            image = form.cleaned_data['image']
-            projector_available = form.cleaned_data['projector_available']
-
-            room = Room.objects.create(room_name=room_name,
-                                       room_capacity=room_capacity,
-                                       projector_available=projector_available,
-                                       size=size,
-                                       building_floor=building_floor,
-                                       image=image
+            room = Room.objects.create(room_name=form.cleaned_data['room_name'],
+                                       room_capacity=form.cleaned_data['room_capacity'],
+                                       projector_available=form.cleaned_data['projector_available'],
+                                       size=form.cleaned_data['size'],
+                                       building_floor=form.cleaned_data['building_floor'],
+                                       image=form.cleaned_data['image']
                                        )
             messages.success(request, f'Room "{room.room_name}" has been added to the database.')
 
-            return redirect(view_rooms)
+            return redirect('offices')
 
         return render(request, self.template_name, {'title': self.title, 'form': form})
 
@@ -61,7 +56,8 @@ def room_details(request, pk):
 
 
 class EditRoomView(FormView):
-    template_name = 'add_room.html'
+    """Edits Room details"""
+    template_name = 'edit_room.html'
     title = 'Edit Room'
 
     def get(self, request, pk):
@@ -71,39 +67,54 @@ class EditRoomView(FormView):
         pre_data = {
             'room_name': room_to_edit.room_name,
             'room_capacity': room_to_edit.room_capacity,
+            'size': room_to_edit.size,
+            'building_floor': room_to_edit.building_floor,
+            'image': room_to_edit.image,
 
         }
         form = EditRoomForm(initial=pre_data)
 
-        return render(request, self.template_name, {'title': self.title, 'form': form})
+        return render(request, self.template_name, {'title': self.title, 'form': form, 'office': room_to_edit})
 
     def post(self, request, pk):
-        form = EditRoomForm(request.POST or None)
+        room_to_edit = Room.objects.get(id=pk)
+        form = EditRoomForm(request.POST, request.FILES, instance=room_to_edit)
         if form.is_valid():
-            room_name = form.cleaned_data['room_name']
-            room_capacity = form.cleaned_data['room_capacity']
-            projector_available = form.cleaned_data['projector_available']
-            try:
-                Room.objects.filter(id=pk).update(room_name=room_name, room_capacity=room_capacity,
-                                                  projector_available=projector_available)
-            except IntegrityError:
-                messages.warning(request, f'Room "{room_name}" already exist in the database')
-                return render(request, self.template_name, {'title': self.title, 'form': form})
+            form.save()
+            messages.success(request, f'Room details updated !')
+            return redirect('offices')
 
-            messages.success(request, 'Room details updated !')
-            return redirect(view_rooms)
         else:
             return render(request, self.template_name, {'title': self.title, 'form': form})
+
+        #     room_name = form.cleaned_data['room_name']
+        #     image = 'images/' + form.cleaned_data['image']
+        #     try:
+        #         Room.objects.filter(id=pk).update(room_name=form.cleaned_data['room_name'],
+        #                                           room_capacity=form.cleaned_data['room_capacity'],
+        #                                           projector_available=form.cleaned_data['projector_available'],
+        #                                           size=form.cleaned_data['size'],
+        #                                           building_floor=form.cleaned_data['building_floor'],
+        #                                           image=form.cleaned_data['image'])
+        #     except IntegrityError:
+        #         messages.warning(request, f'Room "{room_name}" already exist in the database')
+        #         return render(request, self.template_name, {'title': self.title, 'form': form})
+        #
+        #     messages.success(request, f'Room details updated ! link {image}')
+        #     return redirect('offices')
+        # else:
+        #     return render(request, self.template_name, {'title': self.title, 'form': form})
 
 
 def delete_room(request, pk):
     """Deletes room by the given id"""
 
     room_to_delete = Room.objects.get(id=pk)
+    room_to_delete.image.delete()
     room_to_delete.delete()
     messages.success(request,
                      f'Room name "{room_to_delete.room_name}" has been successfully removed from the database.')
-    return redirect(view_rooms)
+    return redirect('offices')
 
 
 class BookRoomView(FormView):
@@ -136,16 +147,6 @@ class BookRoomView(FormView):
                 return render(request, self.template_name, {'room': room_to_book, 'title': self.title, 'form': form})
 
             messages.success(request, f'Room "{room_to_book.room_name}" has been booked for {date} with {company}. ')
-            return redirect(view_rooms)
+            return redirect('offices')
         # messages.warning(request, f'{form.errors}')
         return render(request, self.template_name, {'room': room_to_book, 'title': self.title, 'form': form})
-
-
-def add_picture(request, pk):
-    """Adds room picture to the database"""
-
-    Room.objects.get(id=pk)
-    room.update
-    messages.success(request,
-                     f'Room name "{room_to_delete.room_name}" has been successfully removed from the database.')
-    return redirect(view_rooms)

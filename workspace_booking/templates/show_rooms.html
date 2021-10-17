@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/show_rooms.css' %}">
+
+{% endblock head %}
+
+{% block content %}
+
+{% if rooms %}
+<h4 class="content-h4">List of Rooms available: </h4>
+
+<div class="rooms-container">
+    {% for office in rooms %}
+    <div class="room">
+        <div>
+            <p class="room-name"><span>{{office.room_name}}</span></p>
+        </div>
+        <div class="room-pic">
+
+            {% if office.image or office.image is not null %}
+            <img src="{{ office.image.url }}" alt="office pic">
+
+            {% else %}
+            <div>
+                <img src="/media/images/no_image.png" alt="No picture available">
+
+            </div>
+            {% endif %}
+
+        </div>
+
+
+        <div class="room-details">
+            <table class="room-table">
+                <tr>
+                    <td>Capacity: </td>
+                    <td>{{ office.room_capacity }} </td>
+                </tr>
+                <tr>
+                    <td>Size: </td>
+                    <td>{{ office.size }} </td>
+                </tr>
+                <tr>
+                    <td>Location: </td>
+                    <td>{{ office.building_floor }} </td>
+                </tr>
+                <tr>
+                    <td>Projector: </td>
+                    <td>{% if office.projector_available is False %}
+                    Not
+                    {% endif %}
+                    Available </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="room-links">
+            <a class="bttn-book" href="{% url 'book-room' pk=office.id %}">Bookings</a>
+            <!--            <div class="div-edit-del">-->
+<!--            <a class="edit-btn" href="{% url 'edit-room' pk=office.id %}">Edit</a>-->
+<!--            <a class="edit-btn" href="{% url 'delete-room' pk=office.id %}">Delete</a>-->
+            <!--            </div>-->
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endif %}
+
+<h2>{{ id }}</h2>
+{% endblock content %}
