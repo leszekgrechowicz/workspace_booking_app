@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Dosis:wght@600;800&family=Ephesis&display=swap');
 
 :root {
-    --red: rgba(190, 24, 24, 1)
+    --red: rgb(190, 24, 24)
 }
 
 * {

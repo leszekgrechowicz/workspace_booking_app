@@ -1,0 +1,12 @@
+.form {
+    min-width: 35%;
+}
+
+.btn {
+    width: 150px;
+    float: right;
+}
+
+.div-form {
+    max-width: 600px;
+}

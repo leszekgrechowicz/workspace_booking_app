@@ -10,3 +10,8 @@
 .room {
     min-height: 423px;
 }
+
+.btn {
+    float: right;
+    width: 60px;
+}

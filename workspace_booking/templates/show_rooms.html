@@ -35,7 +35,7 @@
         <div class="room-details">
             <table class="room-table">
                 <tr>
-                    <td>Capacity: </td>
+                    <td>No. of seats: </td>
                     <td>{{ office.room_capacity }} </td>
                 </tr>
                 <tr>
@@ -57,11 +57,16 @@
         </div>
 
         <div class="room-links">
-            <a class="bttn-book" href="{% url 'book-room' pk=office.id %}">Bookings</a>
-            <!--            <div class="div-edit-del">-->
+<!--            <p class="res-status-p">Availability:</p>-->
+            {% if office.reserved %}
+                  <p class="res-ava vacant">Reserved for today!</p>
+            {% else %}
+                 <p class="res-ava available">Free today !</p>
+            {% endif %}
 <!--            <a class="edit-btn" href="{% url 'edit-room' pk=office.id %}">Edit</a>-->
 <!--            <a class="edit-btn" href="{% url 'delete-room' pk=office.id %}">Delete</a>-->
-            <!--            </div>-->
+            <a class="bttn-book" href="{% url 'book-room' pk=office.id %}">Bookings</a>
+
 
         </div>
     </div>
@@ -73,3 +78,4 @@
 
 <h2>{{ id }}</h2>
 {% endblock content %}
+

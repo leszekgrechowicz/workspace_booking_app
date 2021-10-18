@@ -15,6 +15,9 @@ class RoomsView(FormView):
 
     def get(self, request):
         rooms = Room.objects.all().order_by('room_capacity')
+        for room in rooms:
+            reservation_dates = [reservation.date for reservation in room.reservation_set.all()]
+            room.reserved = datetime.now().date() in reservation_dates
         if not rooms:
             messages.info(request, 'All Rooms are vacant !')
 
@@ -48,13 +51,6 @@ class AddRoomView(FormView):
         return render(request, self.template_name, {'title': self.title, 'form': form})
 
 
-def room_details(request, pk):
-    """Displaying room details"""
-
-    title = "Room details"
-    room = Room.object.get(id=pk)
-
-
 class EditRoomView(FormView):
     """Edits Room details"""
     template_name = 'edit_room.html'
@@ -70,7 +66,6 @@ class EditRoomView(FormView):
             'size': room_to_edit.size,
             'building_floor': room_to_edit.building_floor,
             'image': room_to_edit.image,
-
         }
         form = EditRoomForm(initial=pre_data)
 
@@ -86,24 +81,6 @@ class EditRoomView(FormView):
 
         else:
             return render(request, self.template_name, {'title': self.title, 'form': form})
-
-        #     room_name = form.cleaned_data['room_name']
-        #     image = 'images/' + form.cleaned_data['image']
-        #     try:
-        #         Room.objects.filter(id=pk).update(room_name=form.cleaned_data['room_name'],
-        #                                           room_capacity=form.cleaned_data['room_capacity'],
-        #                                           projector_available=form.cleaned_data['projector_available'],
-        #                                           size=form.cleaned_data['size'],
-        #                                           building_floor=form.cleaned_data['building_floor'],
-        #                                           image=form.cleaned_data['image'])
-        #     except IntegrityError:
-        #         messages.warning(request, f'Room "{room_name}" already exist in the database')
-        #         return render(request, self.template_name, {'title': self.title, 'form': form})
-        #
-        #     messages.success(request, f'Room details updated ! link {image}')
-        #     return redirect('offices')
-        # else:
-        #     return render(request, self.template_name, {'title': self.title, 'form': form})
 
 
 def delete_room(request, pk):
@@ -124,7 +101,6 @@ class BookRoomView(FormView):
     def get(self, request, pk):
         todays_date = datetime.now().date()
         room_to_book = Room.objects.get(id=pk)
-        # room_to_book = Room.objects.filter(id=pk, reservation__date__gt=todays_date)
 
         form = BookRoomForm()
         return render(request, self.template_name, {'date': todays_date,

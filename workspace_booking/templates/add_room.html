@@ -1,14 +1,20 @@
 {% extends 'base.html' %}
 
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/add_room.css' %}">
+
+{% endblock head %}
+
 
 {% block content %}
 <h4 class="content-h4">Add Room to the database:</h4>
+<div class="div-form">
+    <form class="form" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input class="btn btn-outline-secondary float-right" type="submit" value="Submit">
+    </form>
 
-<form class="form" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit">
-</form>
-
-
+</div>
 {% endblock content %}

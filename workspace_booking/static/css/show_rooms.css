@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap');
 
 .rooms-container {
     display: flex;
@@ -37,6 +38,8 @@
 
 .room-details {
     margin-top: 20px;
+    border-bottom: 1px solid dimgrey;
+    padding-bottom: 5px;
 }
 
 .room-table {
@@ -55,11 +58,11 @@
 
 }
 
-.bttn-book, .edit-btn{
+.bttn-book, .edit-btn {
     width: 100%;
     height: auto;
-    border: 3px solid gray;
-    border-radius: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
     text-align: center;
     color: black;
     font-size: 1.5em;
@@ -105,50 +108,32 @@
     color: #EC4646;
 }
 
+/*.res-status-p {*/
+/*    padding-top: 12px;*/
+/*    border-top: 1px solid dimgrey;*/
+/*}*/
 
-/*---------------------*/
-
-.my-tooltip {
-    position: relative;
-
-}
-
-.my-tooltip .my-tooltiptext {
-    visibility: hidden;
-    width: 160px;
-    background-color: var(--red);
-    color: #fff;
+.res-ava {
+    width: 100%;
+    height: auto;
+    font-family: 'Rock Salt', cursive;
     text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 85%;
-    left: 45%;
-    margin-left: -60px;
-    opacity: 0;
-    transition: opacity 0.3s;
+    color: black;
+    font-size: 1.2em;
+    text-decoration: none;
+    padding: 9px;
+    margin-bottom: 15px;
+
+
 }
 
-.my-tooltip .my-tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: var(--red) transparent transparent transparent;
+.vacant {
+    color: #be1818;
 }
 
-.my-tooltip:hover .my-tooltiptext {
-    visibility: visible;
-    opacity: 1;
+.available {
+    color: rgba(34, 139, 34, 1);
 }
-
-
-/*------------------------*/
-
 
 
 @media screen and (max-width: 700px) {

@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 
 class Room(models.Model):
@@ -22,9 +23,3 @@ class Reservation(models.Model):
 
     class Meta:
         unique_together = ('room', 'date')
-
-
-
-
-
-

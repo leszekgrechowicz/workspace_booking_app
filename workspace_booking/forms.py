@@ -19,6 +19,12 @@ TEXT_AREA_ATTRS = {
 
 }
 
+CHECK_BOX_ATTRS = {
+    'class': "form-check-input",
+    'style': 'margin-left: 10px;',
+
+}
+
 
 class AddRoomForm(forms.Form):
     room_name = forms.CharField(max_length=255, widget=forms.TextInput(attrs=BOOK_ROOM_ATTRS))
@@ -53,9 +59,8 @@ class EditRoomForm(forms.ModelForm):
             'size': forms.TextInput(attrs=BOOK_ROOM_ATTRS),
             'building_floor': forms.TextInput(attrs=BOOK_ROOM_ATTRS),
             'image': forms.FileInput(attrs=ATTRS),
+            'projector_available': forms.CheckboxInput(attrs=CHECK_BOX_ATTRS),
         }
-
-
 
 
 class DateInput(forms.DateInput):
@@ -71,7 +76,7 @@ class BookRoomForm(forms.Form):
         date = self.cleaned_data.get('date')
         date_today = datetime.now().date()
 
-        if date > date_today:
+        if date >= date_today:
             return date
 
         raise forms.ValidationError(f"Invalid date, you cannot book for the past date !")
